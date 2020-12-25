@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-app
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: users-app
+  template:
+    metadata:
+      labels:
+        app: users-app
+    spec:
+      containers:
+      - image: emanana/restapi-users
+        name: restapi-users
+        imagePullPolicy: Always          
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"       
+        ports:
+        - containerPort: 8080
+        env:
+        - name: POSTGRESS_USERNAME
+          value: "emanana"
+        - name: POSTGRESS_PASSWORD
+          value: "Siyamthanda2017"
+        - name: POSTGRESS_DB
+          value: "udagrammananadev"
+        - name: POSTGRESS_HOST
+          value: "udagrammananadev.clyswua31odz.us-east-1.rds.amazonaws.com"
+        - name: AWS_REGION
+          value: "us-east-1"
+        - name: AWS_PROFILE
+          value: "default"
+        - name: AWS_BUCKET
+          value: "udagram-manana-dev"
+        - name: JWT_SECRET
+          value: "hello world"
+      restartPolicy: Always
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: users-app
+#   labels:
+#     app: users-app
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: users-app
+#   template:
+#     metadata:
+#       labels:
+#         app: users-app
+#     spec:
+#       containers:
+#       - name: restapi-users
+#         image: emanana/restapi-users
+#         ports:
+#         - containerPort: 80
+#         env:
+#         - name: POSTGRESS_USERNAME
+#           value: "emanana"
+#         - name: POSTGRESS_PASSWORD
+#           value: "Siyamthanda2017"
+#         - name: POSTGRESS_DB
+#           value: "udagrammananadev"
+#         - name: POSTGRESS_HOST
+#           value: "udagrammananadev.clyswua31odz.us-east-1.rds.amazonaws.com"
+#         - name: AWS_REGION
+#           value: "us-east-1"
+#         - name: AWS_PROFILE
+#           value: "default"
+#         - name: AWS_BUCKET
+#           value: "udagram-manana-dev"
+#         - name: JWT_SECRET
+#           value: "hello word"
