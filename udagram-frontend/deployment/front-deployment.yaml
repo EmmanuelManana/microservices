@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udagram-frontend2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: udagram-frontend2
+  template:
+    metadata:
+      labels:
+        app: udagram-frontend2
+    spec:
+      containers:
+        - image: emanana/udagram-frontend2
+          name: udagram-frontend2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+      restartPolicy: Always
