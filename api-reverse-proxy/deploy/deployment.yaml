@@ -2,8 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: reverseproxy
-  labels:
-    app: reverseproxy
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -15,16 +14,47 @@ spec:
         app: reverseproxy
     spec:
       containers:
-      - name: api-reverseproxy
-        image: emanana/api-reverseproxy
-        imagePullPolicy: Always
+      - image: emanana/api-reverseproxy
+        name: api-reverseproxy
+        imagePullPolicy: Always          
         resources:
           requests:
             memory: "64Mi"
             cpu: "250m"
           limits:
             memory: "1024Mi"
-            cpu: "500m"
+            cpu: "500m"       
         ports:
         - containerPort: 8080
       restartPolicy: Always
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: reverseproxy
+#   labels:
+#     app: reverseproxy
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: reverseproxy
+#   template: 
+#     metadata:
+#       labels:
+#         app: reverseproxy
+#     spec:
+#       containers:
+#       - name: api-reverseproxy
+#         image: emanana/api-reverseproxy
+#         imagePullPolicy: Always
+#         resources:
+#           requests:
+#             memory: "64Mi"
+#             cpu: "250m"
+#           limits:
+#             memory: "1024Mi"
+#             cpu: "500m"
+#         ports:
+#         - containerPort: 8080
+#       restartPolicy: Always
